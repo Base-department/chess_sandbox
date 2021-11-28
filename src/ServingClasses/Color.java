@@ -1,8 +1,8 @@
 package ServingClasses;
 
-public enum Colour implements Cloneable{
+public enum Color implements Cloneable{
    
     WHITE,
     BLACK;
-
+    
 }

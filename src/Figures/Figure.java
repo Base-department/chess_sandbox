@@ -1,25 +1,25 @@
 package Figures;
 
 import java.util.ArrayList;
-import ServingClasses.Colour;
+import ServingClasses.Color;
 import ServingClasses.Coordinates;
 
 public abstract class Figure implements Cloneable{
 
-    private Colour figure_colour;
+    private Color figure_Color;
     static int value;
 
-    Figure(Colour colour){
+    Figure(Color Color){
 
-        this.figure_colour = colour;
+        this.figure_Color = Color;
     
     }
 
     abstract public Figure clone() throws CloneNotSupportedException;
 
-    public Colour getColour(){
+    public Color getColor(){
 
-        return figure_colour;
+        return figure_Color;
     
     }
 

@@ -5,7 +5,13 @@ public class Cage implements Cloneable{
 
     private Figure figure = null;
     
-    Cage(Figure figure){
+    public Cage(){
+
+        this.figure = null;
+
+    }
+
+    public Cage(Figure figure){
    
         this.figure = figure;
    
@@ -13,7 +19,7 @@ public class Cage implements Cloneable{
 
     public Cage clone() throws CloneNotSupportedException{
 
-        return (new Cage(figure.clone()));
+        return (new Cage(figure == null ? null : figure.clone()));
 
     }
     

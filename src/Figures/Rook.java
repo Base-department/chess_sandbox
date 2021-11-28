@@ -1,16 +1,16 @@
 package Figures;
 
 import java.util.ArrayList;
-import ServingClasses.Colour;
+import ServingClasses.Color;
 import ServingClasses.Coordinates;
 
 public class Rook extends Figure{
 
     public boolean сastling;
     
-    public Rook(Colour colour) {
+    public Rook(Color Color) {
 
-        super(colour);
+        super(Color);
         value = 4;
         сastling = true;
     
@@ -19,14 +19,14 @@ public class Rook extends Figure{
     @Override
     public Figure clone() throws CloneNotSupportedException {
         
-        return new Rook(getColour());
+        return new Rook(getColor());
         
     }
 
     @Override
     public int id(){
 
-        if(this.getColour() == Colour.WHITE){
+        if(this.getColor() == Color.WHITE){
        
             return 6;
        
@@ -41,54 +41,54 @@ public class Rook extends Figure{
     @Override
     public ArrayList<ArrayList<Coordinates>> CoordinatesToMove(Coordinates coordinates) {
        
-        int X = coordinates.toIterator().first;
-        int Y = coordinates.toIterator().second;
+        int X = coordinates.toIterator().second;
+        int Y = coordinates.toIterator().first;
         ArrayList<ArrayList<Coordinates>> array_of_available_coordinates = new ArrayList<ArrayList<Coordinates>>();
 
-        if (7-Y != 0){
+        if (8-Y != 0){
            
-            array_of_available_coordinates.add(7-Y, new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
             
-            for (int i = 1;i<=7-Y;++i){
-       
-                array_of_available_coordinates.get(0).add(new Coordinates(X, Y+i));
-       
+            for (int i = 1;i<=8-Y;++i){
+     
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y+i, X));
+     
             }
 
         }
 
-        if (X != 0){
+        if (X != 1){
            
-            array_of_available_coordinates.add(X, new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
             
-            for (int i = 1;i<=X;++i){
-       
-                array_of_available_coordinates.get(1).add(new Coordinates(X-i, Y));
-       
+            for (int i = 1;i<=X-1;++i){
+     
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y, X-i));
+     
             }
 
         }
 
-        if (Y != 0){
+        if (Y != 1){
            
-            array_of_available_coordinates.add(Y, new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
             
-            for (int i = 1;i<=Y;++i){
-       
-                array_of_available_coordinates.get(2).add(new Coordinates(X, Y-i));
-       
+            for (int i = 1;i<=Y-1;++i){
+     
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y-i, X));
+     
             }
 
         }
 
-        if (7-X != 0){
+        if (8-X != 0){
            
-            array_of_available_coordinates.add(7-X, new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
             
-            for (int i = 1;i<=7-X;++i){
-       
-                array_of_available_coordinates.get(3).add(new Coordinates(X+i, Y));
-       
+            for (int i = 1;i<=8-X;++i){
+     
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y, X+i));
+     
             }
 
         }
@@ -107,7 +107,15 @@ public class Rook extends Figure{
     @Override
     public String toString() {
         
-        return "R";
+       if (this.getColor() == Color.WHITE){
+
+            return "R";
+
+        } else {
+
+            return "r";
+
+        }
 
     }
 

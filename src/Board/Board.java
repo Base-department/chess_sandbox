@@ -1,9 +1,11 @@
 package Board;
 
 import java.util.ArrayList;
+
+import EventsHistory.Event;
+import EventsHistory.Move;
 import Figures.*;
-import MoveHistory.Move;
-import ServingClasses.Colour;
+import ServingClasses.Color;
 import ServingClasses.Coordinates;
 
 public class Board implements Cloneable{
@@ -14,40 +16,58 @@ public class Board implements Cloneable{
 
         board = new Cage[8][8];
         
+        for (int i = 0;i<8;++i){
+            for (int j = 0;j<8;++j){
+
+                board[i][j] = new Cage();
+
+            }
+        }
+        
         for (Cage i : board[1]){
 
-            i.setFigure(new Pawn(Colour.WHITE));
+            i.setFigure(new Pawn(Color.WHITE));
         
         }
         
-        for (Cage i : board[7]){
+        for (Cage i : board[6]){
         
-            i.setFigure(new Pawn(Colour.BLACK));
+            i.setFigure(new Pawn(Color.BLACK));
         
         }
         
-        board[0][0].setFigure(new Rook(Colour.WHITE));
-        board[0][7].setFigure(new Rook(Colour.WHITE));
-        board[0][1].setFigure(new Knight(Colour.WHITE));
-        board[0][6].setFigure(new Knight(Colour.WHITE));
-        board[0][2].setFigure(new Bishop(Colour.WHITE));
-        board[0][5].setFigure(new Bishop(Colour.WHITE));
-        board[0][3].setFigure(new Queen(Colour.WHITE));
-        board[0][4].setFigure(new King(Colour.WHITE));
+        board[0][0].setFigure(new Rook(Color.WHITE));
+        board[0][7].setFigure(new Rook(Color.WHITE));
+        board[0][1].setFigure(new Knight(Color.WHITE));
+        board[0][6].setFigure(new Knight(Color.WHITE));
+        board[0][2].setFigure(new Bishop(Color.WHITE));
+        board[0][5].setFigure(new Bishop(Color.WHITE));
+        board[0][3].setFigure(new Queen(Color.WHITE));
+        board[0][4].setFigure(new King(Color.WHITE));
 
-        board[7][0].setFigure(new Rook(Colour.BLACK));
-        board[7][7].setFigure(new Rook(Colour.BLACK));
-        board[7][1].setFigure(new Knight(Colour.BLACK));
-        board[7][6].setFigure(new Knight(Colour.BLACK));
-        board[7][2].setFigure(new Bishop(Colour.BLACK));
-        board[7][5].setFigure(new Bishop(Colour.BLACK));
-        board[7][3].setFigure(new Queen(Colour.BLACK));
-        board[7][4].setFigure(new King(Colour.BLACK));
+        board[7][0].setFigure(new Rook(Color.BLACK));
+        board[7][7].setFigure(new Rook(Color.BLACK));
+        board[7][1].setFigure(new Knight(Color.BLACK));
+        board[7][6].setFigure(new Knight(Color.BLACK));
+        board[7][2].setFigure(new Bishop(Color.BLACK));
+        board[7][5].setFigure(new Bishop(Color.BLACK));
+        board[7][3].setFigure(new Queen(Color.BLACK));
+        board[7][4].setFigure(new King(Color.BLACK));
     }
 
     public Board clone() throws CloneNotSupportedException{
 
-        return (new Board(board.clone()));
+        Cage[][] clone_board = new Cage[8][8];
+
+        for (int i = 0;i<8;++i){
+            for (int j = 0;j<8;++j){
+
+                clone_board[i][j] = board[i][j].clone();
+
+            }
+        }
+
+        return new Board(clone_board);
 
     }
 
@@ -58,8 +78,8 @@ public class Board implements Cloneable{
     }
 
     public Cage getCage(Coordinates coordinates){
-    
-        return board[coordinates.toIterator().first][coordinates.toIterator().second];
+        
+        return board[coordinates.toIterator().first - 1][coordinates.toIterator().second - 1];
     
     }
 
@@ -69,19 +89,19 @@ public class Board implements Cloneable{
 
     }
 
-    public ArrayList<Coordinates> availableCoordinatesToAttack(Coordinates coordinates, Move last_move){
+    public ArrayList<Coordinates> availableCoordinatesToAttack(Coordinates coordinates, Event last_event){
         
         ArrayList<ArrayList<Coordinates>> coordinates_to_attack = getCage(coordinates).getFigure().CoordinatesToAttack(coordinates);
         ArrayList<Coordinates> available_coordinates_to_attack = new ArrayList<Coordinates>();
 
-        if (getCage(coordinates).getFigure().getClass() == Pawn.class && last_move.getMove().second.getClass() == Pawn.class
-            && last_move.getMove().first.second.toIterator().second == coordinates.toIterator().second){
+        if (getCage(coordinates).getFigure().getClass() == Pawn.class && last_event != null && last_event.getClass() == Move.class && ((Move)last_event).getMove().second.getClass() == Pawn.class
+            && ((Move)last_event).getMove().first.second.toIterator().second == coordinates.toIterator().second){
             
-            if (last_move.getMove().first.second.toIterator().first == coordinates.toIterator().first - 1){
+            if (((Move)last_event).getMove().first.second.toIterator().first == coordinates.toIterator().first - 1){
 
                 available_coordinates_to_attack.add(new Coordinates(coordinates.toIterator().first - 1, coordinates.toIterator().second));
 
-            } else if (last_move.getMove().first.second.toIterator().first == coordinates.toIterator().first + 1){
+            } else if (((Move)last_event).getMove().first.second.toIterator().first == coordinates.toIterator().first + 1){
 
                 available_coordinates_to_attack.add(new Coordinates(coordinates.toIterator().first + 1, coordinates.toIterator().second));
 
@@ -94,7 +114,11 @@ public class Board implements Cloneable{
 
                 if (getCage(j).getFigure() != null){
                     
-                    available_coordinates_to_attack.add(j); 
+                    if (getCage(j).getFigure().getColor() != getCage(coordinates).getFigure().getColor()){
+                
+                        available_coordinates_to_attack.add(j); 
+                
+                    }
                     break;
                 
                 }

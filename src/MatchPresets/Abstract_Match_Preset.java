@@ -6,7 +6,7 @@ import Board.*;
 public abstract class Abstract_Match_Preset implements Cloneable{
 
     protected int first_player_time, second_player_time;
-    protected Colour first_player_colour;
+    protected Color first_player_Color;
     protected Board start_position; 
     protected boolean first_player_сastling;
     protected boolean second_player_castling;
@@ -23,9 +23,9 @@ public abstract class Abstract_Match_Preset implements Cloneable{
         return second_player_time;
   
     }
-    public Colour getFirstPlayerColour(){
+    public Color getFirstPlayerColor(){
   
-        return first_player_colour;
+        return first_player_Color;
   
     }
     public Board getBoard(){

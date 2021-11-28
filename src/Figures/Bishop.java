@@ -1,14 +1,14 @@
 package Figures;
 
 import java.util.ArrayList;
-import ServingClasses.Colour;
+import ServingClasses.Color;
 import ServingClasses.Coordinates;
 
 public class Bishop extends Figure{
 
-    public Bishop(Colour colour) {
+    public Bishop(Color Color) {
 
-        super(colour);
+        super(Color);
         value = 3;
     
     }
@@ -16,14 +16,14 @@ public class Bishop extends Figure{
     @Override
     public Figure clone() throws CloneNotSupportedException {
         
-        return new Bishop(getColour());
+        return new Bishop(getColor());
         
     }
 
     @Override
     public int id(){
     
-        if(this.getColour() == Colour.WHITE){
+        if(this.getColor() == Color.WHITE){
          
             return 4;
         
@@ -38,53 +38,53 @@ public class Bishop extends Figure{
     @Override
     public ArrayList<ArrayList<Coordinates>> CoordinatesToMove(Coordinates coordinates) {
         
-        int X = coordinates.toIterator().first;
-        int Y = coordinates.toIterator().second;
+        int X = coordinates.toIterator().second;
+        int Y = coordinates.toIterator().first;
         ArrayList<ArrayList<Coordinates>> array_of_available_coordinates = new ArrayList<ArrayList<Coordinates>>();
 
-        if (Math.min(7-Y,X) != 0){
+        if (Math.min(8-Y,X-1) != 0){
            
-            array_of_available_coordinates.add(Math.min(7-Y,X), new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
             
-            for (int i = 1;i<=Math.min(7-Y,X);++i){
+            for (int i = 1;i<=Math.min(8-Y,X-1);++i){
          
-                array_of_available_coordinates.get(0).add(new Coordinates(X-i, Y+i));
-         
-            }
-
-        }
-
-        if (Math.min(Y,X) != 0){
-           
-            array_of_available_coordinates.add(Math.min(Y,X), new ArrayList<Coordinates>());
-           
-            for (int i = 1;i<=Math.min(Y,X);++i){
-         
-                array_of_available_coordinates.get(1).add(new Coordinates(X-i, Y-i));
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y+i, X-i));
          
             }
 
         }
 
-        if (Math.min(Y,7-X) != 0){
+        if (Math.min(Y-1,X-1) != 0){
            
-            array_of_available_coordinates.add(Math.min(Y,7-X), new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
            
-            for (int i = 1;i<=Math.min(Y,7-X);++i){
+            for (int i = 1;i<=Math.min(Y-1,X-1);++i){
          
-                array_of_available_coordinates.get(2).add(new Coordinates(X+i, Y-i));
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y-i, X-i));
          
             }
 
         }
 
-        if (Math.min(7-Y,7-X) != 0){
+        if (Math.min(Y-1, 8-X) != 0){
            
-            array_of_available_coordinates.add(Math.min(7-Y,7-X), new ArrayList<Coordinates>());
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
            
-            for (int i = 1;i<=Math.min(7-Y,7-X);++i){
+            for (int i = 1;i<=Math.min(Y-1, 8-X);++i){
          
-                array_of_available_coordinates.get(3).add(new Coordinates(X+i, Y+i));
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y-i, X+i));
+         
+            }
+
+        }
+
+        if (Math.min(8-Y,8-X) != 0){
+           
+            array_of_available_coordinates.add(new ArrayList<Coordinates>());
+           
+            for (int i = 1;i<=Math.min(8-Y,8-X);++i){
+         
+                array_of_available_coordinates.get(array_of_available_coordinates.size()-1).add(new Coordinates(Y+i, X+i));
          
             }
 
@@ -103,7 +103,15 @@ public class Bishop extends Figure{
     @Override
     public String toString() {
         
-        return "B";
+        if (this.getColor() == Color.WHITE){
+
+            return "B";
+
+        } else {
+
+            return "b";
+
+        }
 
     }
 

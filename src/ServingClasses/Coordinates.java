@@ -2,11 +2,11 @@ package ServingClasses;
 
 public class Coordinates implements Cloneable {
 
-    private Pair<Character,Integer> coordinates = null;
+    private Pair<Integer,Character> coordinates = null;
 
     public Coordinates(Character letter, Integer number){
        
-        coordinates = new Pair<Character,Integer>(letter, number);
+        coordinates = new Pair<Integer,Character>(number, letter);
     
     }
 
@@ -18,7 +18,7 @@ public class Coordinates implements Cloneable {
 
     public Coordinates(Integer number1, Integer number2){
 
-        coordinates = new Pair<Character,Integer>((char)(number1+'a'), number2);
+        coordinates = new Pair<Integer,Character>(number1, (char)(number2 + 'a' - 1));
 
     }
 
@@ -30,7 +30,7 @@ public class Coordinates implements Cloneable {
 
         }
         
-        return new Pair<Integer,Integer>(coordinates.first.charValue()-'a', coordinates.second - 1);
+        return new Pair<Integer,Integer>(coordinates.first, coordinates.second.charValue()-'a' + 1);
     
     }
 
@@ -42,8 +42,14 @@ public class Coordinates implements Cloneable {
 
         }
 
-        return new String(coordinates.first.toString() + coordinates.second);
+        return new String(coordinates.second.toString() + coordinates.first);
     
+    }
+
+    public boolean equals(Coordinates coordinates){
+
+        return (coordinates.toIterator().first == this.toIterator().first && coordinates.toIterator().second == this.toIterator().second);
+
     }
 
     

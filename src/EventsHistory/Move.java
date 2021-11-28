@@ -1,13 +1,14 @@
-package MoveHistory;
+package EventsHistory;
 
-import Figures.*;
-import ServingClasses.*;
+import Figures.Figure;
+import ServingClasses.Coordinates;
+import ServingClasses.Pair;
 
-public class Move implements Cloneable{
+public class Move extends Event {
     
     private Pair<Pair<Coordinates,Coordinates>,Figure> move;
 
-    Move(Coordinates start, Coordinates finish, Figure figure){
+    public Move(Coordinates start, Coordinates finish, Figure figure){
 
         move = new Pair<Pair<Coordinates,Coordinates>,Figure>(new Pair<Coordinates, Coordinates>(start,finish), figure);
 
